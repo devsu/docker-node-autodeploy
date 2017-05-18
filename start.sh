@@ -17,9 +17,9 @@ function runPM2 {
   echo "Starting PM2"
 
   if [ -z "$APP" ]; then
-    pm2 start npm -n ${APP_NAME:=app} --watch --no-daemon $PARAMETERS -- start
+    pm2-dev start index.js $PARAMETERS
   else
-    pm2 start $APP --no-daemon $PARAMETERS
+    pm2-dev start $APP $PARAMETERS
   fi
 }
 
