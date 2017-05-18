@@ -2,11 +2,12 @@ FROM node:7-alpine
 
 MAINTAINER Cesar Salazar "csalazar@devsu.com"
 
-# bash is required for running the script
-# rsync is required by simple-auto-deploy
-# libc6-compat is required for GRPC support
+# bash, inotify-tools: required for running the script
+# rsync: required by simple-auto-deploy
+# libc6-compat: required for GRPC support
+# python, build-base: required by some node modules
 RUN apk update && apk upgrade && \
-    apk add --no-cache bash rsync libc6-compat inotify-tools
+    apk add --no-cache bash inotify-tools rsync libc6-compat python build-base
 
 RUN npm install -g simple-auto-deploy pm2
 
