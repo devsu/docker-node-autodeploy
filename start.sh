@@ -2,13 +2,13 @@
 
 SOURCES_DIR=/var/sources
 APP_DIR=/var/app
+SIMPLE_DEPLOY_DONE_FILE=${APP_DIR}/simple-deploy-done
 
 cd ${APP_DIR}
+rm ${SIMPLE_DEPLOY_DONE_FILE}
 
 function runPM2 {
   echo "Waiting for simple-deploy to perform its first deployment"
-
-  SIMPLE_DEPLOY_DONE_FILE=${APP_DIR}/simple-deploy-done
   while [ ! -f "$SIMPLE_DEPLOY_DONE_FILE" ]
   do
     inotifywait -qqt 2 -e create -e moved_to "$(dirname $SIMPLE_DEPLOY_DONE_FILE)"
