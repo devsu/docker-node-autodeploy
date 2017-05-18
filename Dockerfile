@@ -6,9 +6,9 @@ MAINTAINER Cesar Salazar "csalazar@devsu.com"
 # rsync is required by simple-auto-deploy
 # libc6-compat is required for GRPC support
 RUN apk update && apk upgrade && \
-    apk add --no-cache bash rsync libc6-compat
+    apk add --no-cache bash rsync libc6-compat inotify-tools
 
-RUN npm install -g simple-auto-deploy@0.0.4 pm2@latest
+RUN npm install -g simple-auto-deploy pm2
 
 RUN mkdir -p /var/sources /var/app /var/log/app
 

@@ -1,11 +1,26 @@
 #!/bin/bash
 
-cd /var/app
+SOURCES_DIR=/var/sources
+APP_DIR=/var/app
 
-if [ -z "$APP" ]; then
-  COMMAND="pm2 start npm -n ${APP_NAME:=app} --watch --no-daemon $PARAMETERS -- start"
-else
-  COMMAND="pm2 start $APP --no-daemon $PARAMETERS"
-fi
+cd ${APP_DIR}
 
-simple-auto-deploy /var/sources /var/app & ${COMMAND}
+function runPM2 {
+  echo "Waiting for simple-deploy to perform its first deployment"
+
+  SIMPLE_DEPLOY_DONE_FILE=${APP_DIR}/simple-deploy-done
+  while [ ! -f "$SIMPLE_DEPLOY_DONE_FILE" ]
+  do
+    inotifywait -qqt 2 -e create -e moved_to "$(dirname $SIMPLE_DEPLOY_DONE_FILE)"
+  done
+
+  echo "Starting PM2"
+
+  if [ -z "$APP" ]; then
+    pm2 start npm -n ${APP_NAME:=app} --watch --no-daemon $PARAMETERS -- start
+  else
+    pm2 start $APP --no-daemon $PARAMETERS
+  fi
+}
+
+simple-auto-deploy ${SOURCES_DIR} ${APP_DIR} & runPM2
