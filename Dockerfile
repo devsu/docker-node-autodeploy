@@ -9,7 +9,7 @@ MAINTAINER Cesar Salazar "csalazar@devsu.com"
 RUN apk update && apk upgrade && \
     apk add --no-cache bash inotify-tools rsync libc6-compat python build-base
 
-RUN npm install -g simple-auto-deploy pm2 yarn
+RUN npm install -g simple-auto-deploy pm2
 
 RUN mkdir -p /var/sources /var/app /var/log/app
 
