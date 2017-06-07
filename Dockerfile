@@ -7,9 +7,9 @@ MAINTAINER Cesar Salazar "csalazar@devsu.com"
 # libc6-compat: required for GRPC support
 # python, build-base: required by some node modules
 RUN apk update && apk upgrade && \
-    apk add --no-cache bash inotify-tools rsync libc6-compat python build-base yarn
+    apk add --no-cache bash inotify-tools rsync libc6-compat python build-base
 
-RUN npm install -g simple-auto-deploy pm2
+RUN npm install -g simple-auto-deploy pm2 yarn
 
 RUN mkdir -p /var/sources /var/app /var/log/app
 
